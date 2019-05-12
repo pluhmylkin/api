@@ -1,0 +1,25 @@
+{
+  "name": "api",
+  "version": "0.0.1",
+  "description": "Payments service with JSON API. API methods require authentication by passing a bearer token (https://tools.ietf.org/html/rfc6750). ",
+  "main": "index.js",
+  "scripts": {
+    "watch": "nodemon ./src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pluhmylkin/api.git"
+  },
+  "author": "Andrei Pliukhaev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pluhmylkin/api/issues"
+  },
+  "homepage": "https://github.com/pluhmylkin/api#readme",
+  "devDependencies": {
+    "nodemon": "^1.19.0"
+  },
+  "dependencies": {
+    "koa": "^2.7.0"
+  }
+}
