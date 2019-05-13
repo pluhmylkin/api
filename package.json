@@ -4,7 +4,7 @@
   "description": "Payments service with JSON API. API methods require authentication by passing a bearer token (https://tools.ietf.org/html/rfc6750). ",
   "main": "index.js",
   "scripts": {
-    "watch": "nodemon ./src/server.js"
+    "watch": "nodemon --exec babel-node ./src/server.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/pluhmylkin/api#readme",
   "devDependencies": {
+    "@babel/core": "^7.4.4",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.4.4",
     "nodemon": "^1.19.0"
   },
   "dependencies": {
