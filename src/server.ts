@@ -1,5 +1,8 @@
 import * as Koa from 'koa';
+import createLogger from './logger';
+
 const app = new Koa();
+const logger = createLogger('server');
 
 app.use(async ctx => {
   ctx.body = 'Hello World';
@@ -17,4 +20,4 @@ app.use(async (ctx, next) => {
 });
 
 app.listen(3000);
-console.log('Server running on port 3000');
+logger.info('Server running on port 3000');

@@ -7,7 +7,11 @@ Payments service with JSON API. API methods require authentication by passing a 
 ## Back-end
 
 - KOA 2
+- TS
+- Winston 3
 
 ## For development
 
 - Nodemon
+- TSLint
+- Prettier
