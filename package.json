@@ -4,7 +4,8 @@
   "description": "Payments service with JSON API. API methods require authentication by passing a bearer token (https://tools.ietf.org/html/rfc6750). ",
   "main": "index.js",
   "scripts": {
-    "watch": "nodemon --exec ts-node ./src/server.ts"
+    "watch": "nodemon --exec ts-node ./src/server.ts",
+    "build": "webpack  --mode production"
   },
   "repository": {
     "type": "git",
@@ -21,11 +22,14 @@
     "@types/koa-router": "^7.0.40",
     "nodemon": "^1.19.0",
     "prettier": "^1.17.1",
+    "ts-loader": "^6.0.0",
     "ts-node": "^8.1.0",
     "tslint": "^5.16.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.0.1",
     "typescript": "^3.4.5",
+    "webpack": "^4.31.0",
+    "webpack-cli": "^3.3.2",
     "winston": "^3.2.1",
     "winston-daily-rotate-file": "^3.9.0"
   },
