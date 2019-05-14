@@ -3,8 +3,14 @@ import DailyRotateFile = require('winston-daily-rotate-file');
 
 const { combine, timestamp, colorize, printf } = format;
 
+interface InfoView {
+  timestamp: string;
+  level: string;
+  message: string;
+}
+
 const consoleFormat = printf(
-  info => `${info.timestamp} - ${info.level}: ${info.message}`
+  (info: InfoView) => `${info.timestamp} - ${info.level}: ${info.message}`
 );
 
 export default (name: string) =>

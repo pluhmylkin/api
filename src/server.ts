@@ -1,12 +1,12 @@
 import * as Koa from 'koa';
+
 import createLogger from './logger';
+import router from './routers';
 
 const app = new Koa();
 const logger = createLogger('server');
 
-app.use(async ctx => {
-  ctx.body = 'Hello World';
-});
+app.use(router.routes());
 
 app.use(async (ctx, next) => {
   try {
