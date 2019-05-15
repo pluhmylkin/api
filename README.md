@@ -7,7 +7,8 @@ Payments service with JSON API. API methods require authentication by passing a 
 1. git clone https://github.com/pluhmylkin/api.git
 2. cd api/
 3. docker-compose up
-4. Go to http://localhost:3000
+4. Use http://localhost:3000/api for work
+5. Go to http://localhost:3000/swagger to try API
 
 # Development
 
@@ -30,4 +31,5 @@ Payments service with JSON API. API methods require authentication by passing a 
 - Nodemon
 - Prettier
 - TSLint
+- Tsoa
 - Webpack 4
