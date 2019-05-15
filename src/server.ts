@@ -1,12 +1,13 @@
 import * as Koa from 'koa';
 
 import createLogger from './logger';
-import router from './routers';
+import routers from './routers/v1';
 
 const app = new Koa();
 const logger = createLogger('server');
+const port = 3000;
 
-app.use(router.routes());
+routers(app);
 
 app.use(async (ctx, next) => {
   try {
@@ -19,5 +20,6 @@ app.use(async (ctx, next) => {
   }
 });
 
-app.listen(3000);
-logger.info('Server running on port 3000');
+app.listen(port, () => {
+  logger.info(`Server running on port ${port}`);
+});
