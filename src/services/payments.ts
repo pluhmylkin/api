@@ -10,6 +10,7 @@ import {
 } from 'tsoa';
 import { PaymentStatuses } from '../enums/statuses';
 import { ERR_CANNOT_APPROVE, ERR_CANNOT_CANCEL } from '../helpers/utils';
+import { IError } from '../interfaces/errors';
 import { IPayment, IPaymentCreate, PaymentModel } from '../interfaces/payments';
 
 /**
@@ -48,7 +49,7 @@ export class PaymentsService extends Controller {
     @Body() newPayment: IPaymentCreate
   ): Promise<IPayment> {
     const newP = new PaymentModel(newPayment);
-    newP.save();
+    await newP.save();
     return newP;
   }
 

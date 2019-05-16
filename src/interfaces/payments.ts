@@ -15,8 +15,8 @@ class IPaymentBase extends Typegoose {
   private amount: number;
   @prop({ required: true })
   private currency: string;
-  @prop({ required: true })
-  private comment: string;
+  @prop()
+  private comment?: string;
 }
 
 export interface IPaymentCreate extends IPaymentBase {}

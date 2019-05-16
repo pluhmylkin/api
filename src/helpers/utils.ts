@@ -1,3 +1,6 @@
+import { IDetail } from '../interfaces/detail';
+import { IError } from '../interfaces/errors';
+
 export const ERR_UNATHORIZED = 'ERR_UNATHORIZED';
 export const ERR_AUTH_TOKEN_EXPIRED = 'ERR_AUTH_TOKEN_EXPIRED';
 export const ERR_VALIDATION = 'ERR_VALIDATION';
@@ -6,9 +9,9 @@ export const ERR_CANNOT_CANCEL = 'ERR_CANNOT_CANCEL';
 export const ERR_NO_PAYMENT = 'ERR_NO_PAYMENT';
 export const ERR_CONFLICT_PAYMENT = 'ERR_CONFLICT_PAYMENT';
 
-export const generateError = (error: string) => {
+export const generateError = (code: string, details?: IDetail[]): IError => {
   let message: string;
-  switch (error) {
+  switch (code) {
     case ERR_UNATHORIZED:
       message = 'No auth token provided';
       break;
@@ -18,7 +21,6 @@ export const generateError = (error: string) => {
     case ERR_VALIDATION:
       message = 'Validation failed';
       break;
-    // TODO add details
     case ERR_CANNOT_APPROVE:
       message = 'Cannot approve a payment that has already been cancelled';
       break;
@@ -32,8 +34,21 @@ export const generateError = (error: string) => {
       message = 'Payment already exist';
       break;
     default:
-      message = error;
+      message = code;
+      code = 'Unknow error';
       break;
   }
-  return { error, message };
+
+  return details ? { code, message, details } : { code, message };
+};
+
+export const validationError = (err): IError => {
+  const details = [];
+  Object.keys(err.errors).forEach(error => {
+    let { value } = err.errors[error].properties;
+    const { message, path } = err.errors[error].properties;
+    value = value ? value : `${value}`; // if value undefined, you'll not see it
+    details.push({ message, path, value });
+  });
+  return generateError(ERR_VALIDATION, details as IDetail[]);
 };

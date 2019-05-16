@@ -8,13 +8,14 @@ import {
   ERR_CONFLICT_PAYMENT,
   ERR_NO_PAYMENT,
   generateError,
+  validationError,
 } from '../helpers/utils';
 import { IPayment } from '../interfaces/payments';
 import { PaymentsService } from '../services/payments';
 
 const paymentService = new PaymentsService();
 
-export const getPaymentsController = async (ctx: Context) => {
+export const getPaymentsController = async (ctx: Context): Promise<void> => {
   try {
     const payments = await paymentService.getPayments();
     ctx.status = statuses.SUCCESS;
@@ -25,7 +26,7 @@ export const getPaymentsController = async (ctx: Context) => {
   }
 };
 
-export const getPaymentController = async (ctx: Context) => {
+export const getPaymentController = async (ctx: Context): Promise<void> => {
   try {
     const payment = await paymentService.getPayment(ctx.params.id);
     if (payment) {
@@ -41,7 +42,7 @@ export const getPaymentController = async (ctx: Context) => {
   }
 };
 
-export const createPaymentController = async (ctx: Context) => {
+export const createPaymentController = async (ctx: Context): Promise<void> => {
   try {
     const newPayment = await paymentService.createPayment(ctx.body as IPayment);
     if (newPayment) {
@@ -53,11 +54,15 @@ export const createPaymentController = async (ctx: Context) => {
     }
   } catch (error) {
     ctx.status = statuses.CLIENT_ERROR;
-    ctx.body = generateError(error);
+    if (error.name === 'ValidationError') {
+      ctx.body = validationError(error);
+    } else {
+      ctx.body = generateError(error);
+    }
   }
 };
 
-export const approvePaymentController = async (ctx: Context) => {
+export const approvePaymentController = async (ctx: Context): Promise<void> => {
   try {
     await paymentService.approvePayment(ctx.params.id);
     ctx.status = statuses.SUCCESS;
@@ -68,7 +73,7 @@ export const approvePaymentController = async (ctx: Context) => {
   }
 };
 
-export const cancelPaymentController = async (ctx: Context) => {
+export const cancelPaymentController = async (ctx: Context): Promise<void> => {
   try {
     await paymentService.cancelPayment(ctx.params.id);
     ctx.status = statuses.SUCCESS;

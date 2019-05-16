@@ -12,6 +12,7 @@ const logger = createLogger('server');
 const port = 3000;
 
 db.on('error', err => logger.error(`MongoDB connection error:${err}`));
+
 // router first version
 routers(app);
 
