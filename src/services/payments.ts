@@ -1,5 +1,14 @@
-import { Body, Controller, Get, Post, Put, Route, SuccessResponse } from 'tsoa';
-import { IPayment, IPaymentCreate } from '../models/payments';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Put,
+  Route,
+  SuccessResponse,
+  Tags,
+} from 'tsoa';
+import { IPayment, IPaymentCreate } from '../interfaces/payments';
 
 /**
  * @description Service for entity payments
@@ -9,6 +18,7 @@ export class PaymentsService extends Controller {
   /**
    * @description Returns the list of existing payments.
    */
+  @Tags('Payments')
   @Get()
   public async getPayments(): Promise<IPayment[]> {
     const items: IPayment[] = [
@@ -46,6 +56,7 @@ export class PaymentsService extends Controller {
    * @description Returns an existing payment
    * @param id id of payment
    */
+  @Tags('Payments')
   @Get('{id}')
   public async getPayment(id: string): Promise<IPayment> {
     const items: IPayment = {
@@ -69,6 +80,7 @@ export class PaymentsService extends Controller {
    * @param newPayment new payment
    */
   @SuccessResponse('201', 'Created')
+  @Tags('Payments')
   @Post()
   public async createPayment(
     @Body() newPayment: IPaymentCreate
@@ -91,6 +103,7 @@ export class PaymentsService extends Controller {
   /**
    * @description Approves a payment, effectively it moves money from a payer account to a payee account.
    */
+  @Tags('Payments')
   @Put('{id}/approve')
   public async approvePayment(id: string): Promise<boolean> {
     return true;
@@ -98,6 +111,7 @@ export class PaymentsService extends Controller {
   /**
    * @description Cancels a created payment that hasn’t been approved yet.
    */
+  @Tags('Payments')
   @Put('{id}/cancel')
   public async cancelPayment(id: string): Promise<boolean> {
     const approve = true;

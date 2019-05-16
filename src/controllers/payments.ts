@@ -1,8 +1,8 @@
 // file contain functions for every payments route
 
 import { Context } from 'koa';
-import { IPayment } from '../models/payments';
-import { statuses } from '../models/statuses';
+import { statuses } from '../enums/statuses';
+import { IPayment } from '../interfaces/payments';
 import { PaymentsService } from '../services/payments';
 import {
   CONFLICT_PAYMENT,

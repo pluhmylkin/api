@@ -2,7 +2,13 @@
   "swagger": {
     "outputDirectory": "./swagger/",
     "entryFile": "./src/server.ts",
-    "basePath": "/v1/"
+    "basePath": "/v1/",
+    "tags": [
+      {
+        "name": "Payments",
+        "description": "Operations about payments"
+      }
+    ]
   },
   "routes": {
     "basePath": "/v1/",

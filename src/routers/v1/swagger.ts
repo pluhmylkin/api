@@ -1,6 +1,6 @@
 import { Context } from 'koa';
 import * as Router from 'koa-router';
-import { statuses } from '../../models/statuses';
+import { statuses } from '../../enums/statuses';
 
 export default (baseUrl: string) => {
   const router = new Router({ prefix: `${baseUrl}` });

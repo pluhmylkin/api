@@ -5,7 +5,7 @@ interface IPaymentBase {
   paymentMethod: string;
   amount: number;
   currency: string;
-  comment: string | null;
+  comment: string;
 }
 
 export interface IPaymentCreate extends IPaymentBase {}
