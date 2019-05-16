@@ -3,6 +3,7 @@ import * as Koa from 'koa';
 // tslint:disable-next-line: no-var-requires
 const koaSwagger = require('koa2-swagger-ui');
 
+import { db } from './helpers/mongoose';
 import createLogger from './logger';
 import routers from './routers/v1';
 
@@ -10,6 +11,7 @@ const app = new Koa();
 const logger = createLogger('server');
 const port = 3000;
 
+db.on('error', err => logger.error(`MongoDB connection error:${err}`));
 // router first version
 routers(app);
 

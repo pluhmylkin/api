@@ -21,6 +21,7 @@ Payments service with JSON API. API methods require authentication by passing a 
 
 ## Back-end
 
+- Mongoose
 - NodeJS (KOA 2)
 - TS
 - Winston 3
@@ -32,4 +33,5 @@ Payments service with JSON API. API methods require authentication by passing a 
 - Prettier
 - TSLint
 - Tsoa
+- Typegoose
 - Webpack 4

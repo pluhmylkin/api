@@ -2,15 +2,15 @@
 
 import { Context } from 'koa';
 import { statuses } from '../enums/statuses';
-import { IPayment } from '../interfaces/payments';
-import { PaymentsService } from '../services/payments';
 import {
-  CONFLICT_PAYMENT,
   ERR_CANNOT_APPROVE,
   ERR_CANNOT_CANCEL,
+  ERR_CONFLICT_PAYMENT,
+  ERR_NO_PAYMENT,
   generateError,
-  NO_PAYMENT,
-} from '../utils/error';
+} from '../helpers/utils';
+import { IPayment } from '../interfaces/payments';
+import { PaymentsService } from '../services/payments';
 
 const paymentService = new PaymentsService();
 
@@ -33,7 +33,7 @@ export const getPaymentController = async (ctx: Context) => {
       ctx.body = payment;
     } else {
       ctx.status = statuses.NO_CONTENT;
-      ctx.body = generateError(NO_PAYMENT);
+      ctx.body = generateError(ERR_NO_PAYMENT);
     }
   } catch (error) {
     ctx.status = statuses.CLIENT_ERROR;
@@ -49,7 +49,7 @@ export const createPaymentController = async (ctx: Context) => {
       ctx.body = newPayment;
     } else {
       ctx.status = statuses.CONFLICT;
-      ctx.body = generateError(CONFLICT_PAYMENT);
+      ctx.body = generateError(ERR_CONFLICT_PAYMENT);
     }
   } catch (error) {
     ctx.status = statuses.CLIENT_ERROR;

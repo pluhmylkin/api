@@ -8,7 +8,9 @@ import {
   SuccessResponse,
   Tags,
 } from 'tsoa';
-import { IPayment, IPaymentCreate } from '../interfaces/payments';
+import { PaymentStatuses } from '../enums/statuses';
+import { ERR_CANNOT_APPROVE, ERR_CANNOT_CANCEL } from '../helpers/utils';
+import { IPayment, IPaymentCreate, PaymentModel } from '../interfaces/payments';
 
 /**
  * @description Service for entity payments
@@ -21,34 +23,7 @@ export class PaymentsService extends Controller {
   @Tags('Payments')
   @Get()
   public async getPayments(): Promise<IPayment[]> {
-    const items: IPayment[] = [
-      {
-        amount: 1337.01,
-        comment: null,
-        created: new Date('2018-03-09T11:26:14.805Z'),
-        currency: 'RUB',
-        id: '99999',
-        payeeId: '888888',
-        payerId: '7777777',
-        paymentMethod: 'PMB',
-        paymentSystem: 'yandexMoney',
-        status: 'created',
-        updated: new Date('2018-03-09T11:31:14.666Z'),
-      },
-      {
-        amount: 1337.01,
-        comment: null,
-        created: new Date('2018-03-09T11:26:14.805Z'),
-        currency: 'RUB',
-        id: '99999',
-        payeeId: '888888',
-        payerId: '7777777',
-        paymentMethod: 'PMB',
-        paymentSystem: 'yandexMoney',
-        status: 'created',
-        updated: new Date('2018-03-09T11:31:14.666Z'),
-      },
-    ];
+    const items: IPayment[] = await PaymentModel.find();
     return items;
   }
 
@@ -59,20 +34,7 @@ export class PaymentsService extends Controller {
   @Tags('Payments')
   @Get('{id}')
   public async getPayment(id: string): Promise<IPayment> {
-    const items: IPayment = {
-      amount: 1337.01,
-      comment: null,
-      created: new Date('2018-03-09T11:26:14.805Z'),
-      currency: 'RUB',
-      id: '99999',
-      payeeId: '888888',
-      payerId: '7777777',
-      paymentMethod: 'PMB',
-      paymentSystem: 'yandexMoney',
-      status: 'created',
-      updated: new Date('2018-03-09T11:31:14.666Z'),
-    };
-    return items;
+    return PaymentModel.findOne({ _id: id });
   }
 
   /**
@@ -85,19 +47,9 @@ export class PaymentsService extends Controller {
   public async createPayment(
     @Body() newPayment: IPaymentCreate
   ): Promise<IPayment> {
-    return {
-      amount: 1337.01,
-      comment: null,
-      created: new Date('2018-03-09T11:26:14.805Z'),
-      currency: 'RUB',
-      id: '99999',
-      payeeId: '888888',
-      payerId: '7777777',
-      paymentMethod: 'PMB',
-      paymentSystem: 'yandexMoney',
-      status: 'created',
-      updated: new Date('2018-03-09T11:31:14.666Z'),
-    };
+    const newP = new PaymentModel(newPayment);
+    newP.save();
+    return newP;
   }
 
   /**
@@ -106,7 +58,17 @@ export class PaymentsService extends Controller {
   @Tags('Payments')
   @Put('{id}/approve')
   public async approvePayment(id: string): Promise<boolean> {
-    return true;
+    const payment = await PaymentModel.findOne({ _id: id });
+    if (payment) {
+      if (payment.status !== PaymentStatuses.CANCELED) {
+        payment.status = PaymentStatuses.APPROVED;
+        payment.save();
+        return true;
+      } else {
+        throw new Error(ERR_CANNOT_APPROVE);
+      }
+    }
+    return false;
   }
   /**
    * @description Cancels a created payment that hasn’t been approved yet.
@@ -114,7 +76,16 @@ export class PaymentsService extends Controller {
   @Tags('Payments')
   @Put('{id}/cancel')
   public async cancelPayment(id: string): Promise<boolean> {
-    const approve = true;
-    return !approve;
+    const payment = await PaymentModel.findOne({ _id: id });
+    if (payment) {
+      if (payment.status !== PaymentStatuses.APPROVED) {
+        payment.status = PaymentStatuses.CANCELED;
+        payment.save();
+        return true;
+      } else {
+        throw new Error(ERR_CANNOT_CANCEL);
+      }
+    }
+    return false;
   }
 }

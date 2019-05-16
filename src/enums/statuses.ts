@@ -7,3 +7,9 @@ export enum statuses {
   CONFLICT = 409,
   SERVER_ERROR = 500,
 }
+
+export enum PaymentStatuses {
+  CREATED = 'created',
+  CANCELED = 'canceled',
+  APPROVED = 'approved',
+}

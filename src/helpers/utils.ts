@@ -3,8 +3,8 @@ export const ERR_AUTH_TOKEN_EXPIRED = 'ERR_AUTH_TOKEN_EXPIRED';
 export const ERR_VALIDATION = 'ERR_VALIDATION';
 export const ERR_CANNOT_APPROVE = 'ERR_CANNOT_APPROVE';
 export const ERR_CANNOT_CANCEL = 'ERR_CANNOT_CANCEL';
-export const NO_PAYMENT = 'NO_PAYMENT';
-export const CONFLICT_PAYMENT = 'CONFLICT_PAYMENT';
+export const ERR_NO_PAYMENT = 'ERR_NO_PAYMENT';
+export const ERR_CONFLICT_PAYMENT = 'ERR_CONFLICT_PAYMENT';
 
 export const generateError = (error: string) => {
   let message: string;
@@ -25,10 +25,10 @@ export const generateError = (error: string) => {
     case ERR_CANNOT_CANCEL:
       message = 'Cannot cancel a payment that has already been approved';
       break;
-    case NO_PAYMENT:
+    case ERR_NO_PAYMENT:
       message = 'Payment not found';
       break;
-    case CONFLICT_PAYMENT:
+    case ERR_CONFLICT_PAYMENT:
       message = 'Payment already exist';
       break;
     default:
