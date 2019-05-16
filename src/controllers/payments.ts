@@ -44,7 +44,8 @@ export const getPaymentController = async (ctx: Context): Promise<void> => {
 
 export const createPaymentController = async (ctx: Context): Promise<void> => {
   try {
-    const newPayment = await paymentService.createPayment(ctx.body as IPayment);
+    const newPayment = await paymentService.createPayment(ctx.request
+      .body as IPayment);
     if (newPayment) {
       ctx.status = statuses.CREATED;
       ctx.body = newPayment;

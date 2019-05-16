@@ -1,4 +1,5 @@
 import * as Koa from 'koa';
+import * as bodyParser from 'koa-bodyparser';
 
 // tslint:disable-next-line: no-var-requires
 const koaSwagger = require('koa2-swagger-ui');
@@ -12,6 +13,8 @@ const logger = createLogger('server');
 const port = 3000;
 
 db.on('error', err => logger.error(`MongoDB connection error:${err}`));
+
+app.use(bodyParser());
 
 // router first version
 routers(app);
