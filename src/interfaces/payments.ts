@@ -1,4 +1,3 @@
-import { Document } from 'mongoose';
 import { prop, Typegoose } from 'typegoose';
 import { PaymentStatuses } from '../enums/statuses';
 
@@ -32,9 +31,5 @@ export class IPayment extends IPaymentBase {
   @prop({ enum: PaymentStatuses, default: 'created' })
   public status: string;
 }
-
-export interface IPaymentApprove {}
-
-export interface IPaymentCancel {}
 
 export const PaymentModel = new IPayment().getModelForClass(IPayment);

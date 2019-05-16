@@ -4,25 +4,26 @@ import {
   Get,
   Post,
   Put,
+  Response,
   Route,
   SuccessResponse,
   Tags,
 } from 'tsoa';
 import { PaymentStatuses } from '../enums/statuses';
 import { ERR_CANNOT_APPROVE, ERR_CANNOT_CANCEL } from '../helpers/utils';
-import { IError } from '../interfaces/errors';
 import { IPayment, IPaymentCreate, PaymentModel } from '../interfaces/payments';
 
 /**
  * @description Service for entity payments
  */
 @Route('/payments')
+@Tags('Payments')
 export class PaymentsService extends Controller {
   /**
    * @description Returns the list of existing payments.
    */
-  @Tags('Payments')
   @Get()
+  @Response('200', 'Success')
   public async getPayments(): Promise<IPayment[]> {
     const items: IPayment[] = await PaymentModel.find();
     return items;
@@ -32,7 +33,8 @@ export class PaymentsService extends Controller {
    * @description Returns an existing payment
    * @param id id of payment
    */
-  @Tags('Payments')
+  @Response('400', 'Client error')
+  @Response('200', 'Success')
   @Get('{id}')
   public async getPayment(id: string): Promise<IPayment> {
     return PaymentModel.findOne({ _id: id });
@@ -43,7 +45,7 @@ export class PaymentsService extends Controller {
    * @param newPayment new payment
    */
   @SuccessResponse('201', 'Created')
-  @Tags('Payments')
+  @Response('400', 'Client error')
   @Post()
   public async createPayment(
     @Body() newPayment: IPaymentCreate
@@ -56,7 +58,8 @@ export class PaymentsService extends Controller {
   /**
    * @description Approves a payment, effectively it moves money from a payer account to a payee account.
    */
-  @Tags('Payments')
+  @Response('400', 'Client error')
+  @Response('200', 'Success')
   @Put('{id}/approve')
   public async approvePayment(id: string): Promise<boolean> {
     const payment = await PaymentModel.findOne({ _id: id });
@@ -74,7 +77,8 @@ export class PaymentsService extends Controller {
   /**
    * @description Cancels a created payment that hasn’t been approved yet.
    */
-  @Tags('Payments')
+  @Response('400', 'Client error')
+  @Response('200', 'Success')
   @Put('{id}/cancel')
   public async cancelPayment(id: string): Promise<boolean> {
     const payment = await PaymentModel.findOne({ _id: id });

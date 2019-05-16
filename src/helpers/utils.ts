@@ -8,6 +8,7 @@ export const ERR_CANNOT_APPROVE = 'ERR_CANNOT_APPROVE';
 export const ERR_CANNOT_CANCEL = 'ERR_CANNOT_CANCEL';
 export const ERR_NO_PAYMENT = 'ERR_NO_PAYMENT';
 export const ERR_CONFLICT_PAYMENT = 'ERR_CONFLICT_PAYMENT';
+export const ERR_NO_VALID_ID = 'ERR_NO_VALID_ID';
 
 export const generateError = (code: string, details?: IDetail[]): IError => {
   let message: string;
@@ -32,6 +33,9 @@ export const generateError = (code: string, details?: IDetail[]): IError => {
       break;
     case ERR_CONFLICT_PAYMENT:
       message = 'Payment already exist';
+      break;
+    case ERR_NO_VALID_ID:
+      message = 'Your id not valid';
       break;
     default:
       message = code;
