@@ -8,12 +8,12 @@ mongoose.connect(MONGOOSE_CONNECT, { useNewUrlParser: true });
 
 export const db = mongoose.connection;
 
-export const isValidId = (ctx: Context, next): void => {
+export const isValidId = (ctx: Context, next) => {
   const { id } = ctx.params;
   if (!id || id.trim() === '' || !mongoose.Types.ObjectId.isValid(id)) {
     ctx.status = statuses.CLIENT_ERROR;
     ctx.body = generateError(ERR_NO_VALID_ID);
   } else {
-    next();
+    return next();
   }
 };

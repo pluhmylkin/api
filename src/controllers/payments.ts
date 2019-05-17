@@ -26,14 +26,16 @@ export const getPaymentsController = async (ctx: Context): Promise<void> => {
   }
 };
 
-export const getPaymentController = async (ctx: Context): Promise<void> => {
+export const getPaymentController = async (ctx: Context) => {
   try {
-    const payment = await paymentService.getPayment(ctx.params.id);
+    const { id } = ctx.params;
+    const payment = await paymentService.getPayment(id);
+
     if (payment) {
       ctx.status = statuses.SUCCESS;
       ctx.body = payment;
     } else {
-      ctx.status = statuses.NO_CONTENT;
+      ctx.status = statuses.CLIENT_ERROR;
       ctx.body = generateError(ERR_NO_PAYMENT);
     }
   } catch (error) {
@@ -65,9 +67,15 @@ export const createPaymentController = async (ctx: Context): Promise<void> => {
 
 export const approvePaymentController = async (ctx: Context): Promise<void> => {
   try {
-    await paymentService.approvePayment(ctx.params.id);
-    ctx.status = statuses.SUCCESS;
-    ctx.body = '';
+    const { id } = ctx.params;
+    const existPayment = await paymentService.approvePayment(id);
+    if (existPayment) {
+      ctx.status = statuses.SUCCESS;
+      ctx.body = '';
+    } else {
+      ctx.status = statuses.CLIENT_ERROR;
+      ctx.body = generateError(ERR_NO_PAYMENT);
+    }
   } catch (error) {
     ctx.status = statuses.CLIENT_ERROR;
     ctx.body = generateError(ERR_CANNOT_APPROVE);
@@ -76,9 +84,15 @@ export const approvePaymentController = async (ctx: Context): Promise<void> => {
 
 export const cancelPaymentController = async (ctx: Context): Promise<void> => {
   try {
-    await paymentService.cancelPayment(ctx.params.id);
-    ctx.status = statuses.SUCCESS;
-    ctx.body = '';
+    const { id } = ctx.params;
+    const existPayment = await paymentService.cancelPayment(id);
+    if (existPayment) {
+      ctx.status = statuses.SUCCESS;
+      ctx.body = '';
+    } else {
+      ctx.status = statuses.CLIENT_ERROR;
+      ctx.body = generateError(ERR_NO_PAYMENT);
+    }
   } catch (error) {
     ctx.status = statuses.CLIENT_ERROR;
     ctx.body = generateError(ERR_CANNOT_CANCEL);
