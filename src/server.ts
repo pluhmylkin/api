@@ -1,3 +1,4 @@
+import * as cors from '@koa/cors';
 import * as Koa from 'koa';
 import * as bodyParser from 'koa-bodyparser';
 
@@ -11,7 +12,7 @@ import routers from './routers/v1';
 const app = new Koa();
 const logger = createLogger('server');
 const port = 3000;
-
+app.use(cors());
 db.on('error', err => logger.error(`MongoDB connection error:${err}`));
 
 app.use(bodyParser());
