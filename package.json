@@ -6,7 +6,7 @@
   "scripts": {
     "generate": "tsoa routes && tsoa swagger",
     "watch": "npm run generate && nodemon --exec ts-node ./src/server.ts",
-    "build": "npm run generate && webpack  --mode production"
+    "build": "npm run generate && tsc"
   },
   "repository": {
     "type": "git",
@@ -35,8 +35,6 @@
     "tsoa": "^2.3.81",
     "typegoose": "^5.6.0",
     "typescript": "^3.4.5",
-    "webpack": "^4.31.0",
-    "webpack-cli": "^3.3.2",
     "winston": "^3.2.1",
     "winston-daily-rotate-file": "^3.9.0"
   },
