@@ -5,13 +5,14 @@ import * as bodyParser from 'koa-bodyparser';
 // tslint:disable-next-line: no-var-requires
 const koaSwagger = require('koa2-swagger-ui');
 
+import createConfig from '../cfg/config';
 import { db } from './helpers/mongoose';
 import createLogger from './logger';
 import routers from './routers/v1';
 
 const app = new Koa();
 const logger = createLogger('server');
-const port = 3000;
+const config = createConfig();
 app.use(cors());
 db.on('error', err => logger.error(`MongoDB connection error:${err}`));
 
@@ -50,6 +51,6 @@ app.use(async (ctx, next) => {
   }
 });
 
-app.listen(port, () => {
-  logger.info(`Server running on port ${port}`);
+app.listen(config.get('port'), () => {
+  logger.info(`Server running on port ${config.get('port')}`);
 });

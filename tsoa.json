@@ -1,6 +1,6 @@
 {
   "swagger": {
-    "outputDirectory": "./swagger/",
+    "outputDirectory": "./src/swagger",
     "entryFile": "./src/server.ts",
     "basePath": "/v1/",
     "tags": [
@@ -13,6 +13,6 @@
   "routes": {
     "basePath": "/v1/",
     "entryFile": "./src/server.ts",
-    "routesDir": "./swagger/"
+    "routesDir": "./src/swagger"
   }
 }

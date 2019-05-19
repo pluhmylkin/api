@@ -11,6 +11,8 @@ services:
       - mongo
     environment:
       - 'MONGODB=mongodb://mongo:27017/'
+      - 'PORT=3000'
+      - 'DBNAME=api'
   mongo:
     container_name: mongo
     image: "mongo"

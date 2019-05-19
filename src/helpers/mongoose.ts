@@ -1,10 +1,13 @@
 import { Context } from 'koa';
 import * as mongoose from 'mongoose';
+import createConfig from '../../cfg/config';
 import { statuses } from '../enums/statuses';
 import { ERR_NO_VALID_ID, generateError } from './utils';
 
-const MONGOOSE_CONNECT = 'mongodb://localhost/api';
-mongoose.connect(MONGOOSE_CONNECT, { useNewUrlParser: true });
+const config = createConfig();
+mongoose.connect(`${config.get('mongodb')}${config.get('dbname')}`, {
+  useNewUrlParser: true,
+});
 
 export const db = mongoose.connection;
 

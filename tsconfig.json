@@ -1,14 +1,16 @@
 {
   "compilerOptions": {
+    "allowJs": true,
     "module": "commonjs",
     "target": "esnext",
     "outDir": "./dist",
-    "sourceMap": true,
+    "sourceMap": false,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true
   },
-  "include": ["./src/**/*"],
+  "include": ["./src/**/*", "./src/**/*.json", "cfg"],
   "exclude": ["node_modules"]
 }
